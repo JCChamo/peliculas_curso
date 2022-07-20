@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas_curso/theme/app_theme.dart';
+import 'package:peliculas_curso/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   @override
@@ -12,7 +13,14 @@ class DetailsScreen extends StatelessWidget {
         child: CustomScrollView(
             slivers: [
               _CustomAppBar(),
-              SliverList(delegate: SliverChildListDelegate([_PosterAndTitle()]))
+              SliverList(
+                  delegate: SliverChildListDelegate([
+                const _PosterAndTitle(),
+                const _Overview(),
+                const _Overview(),
+                const _Overview(),
+                CastingCards()
+              ]))
             ],
             physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics())),
@@ -35,6 +43,7 @@ class _CustomAppBar extends StatelessWidget {
         title: Container(
             width: double.infinity,
             color: Colors.black12,
+            padding: const EdgeInsets.all(10),
             child: const Text('movie.title', style: TextStyle(fontSize: 16)),
             alignment: Alignment.bottomCenter),
         background: const FadeInImage(
@@ -61,7 +70,7 @@ class _PosterAndTitle extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             child: const FadeInImage(
               height: 150,
-              placeholder: AssetImage('asstes/no-image.jpg'),
+              placeholder: AssetImage('assets/no-image.jpg'),
               image: NetworkImage('https://via.placeholder.com/200x300'),
             ),
           ),
@@ -85,6 +94,24 @@ class _PosterAndTitle extends StatelessWidget {
             ],
           )
         ],
+      ),
+    );
+  }
+}
+
+class _Overview extends StatelessWidget {
+  const _Overview({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      padding: EdgeInsets.symmetric(
+          horizontal: size.width * 0.1, vertical: size.width * 0.05),
+      child: Text(
+        'Minim Lorem amet minim incididunt pariatur minim Lorem tempor est ex. Aliquip magna magna sint consequat fugiat duis. Cupidatat voluptate ullamco excepteur mollit esse irure. Reprehenderit dolore nostrud officia exercitation dolor.',
+        textAlign: TextAlign.justify,
+        style: Theme.of(context).textTheme.subtitle1,
       ),
     );
   }

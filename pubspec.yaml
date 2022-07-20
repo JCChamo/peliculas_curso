@@ -24,6 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
   card_swiper: ^2.0.4
+  http: ^0.13.0
+  provider: ^6.0.3
 
 
 
