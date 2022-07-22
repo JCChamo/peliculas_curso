@@ -20,7 +20,7 @@ class DetailsScreen extends StatelessWidget {
                 _Overview(movie: movie),
                 _Overview(movie: movie),
                 _Overview(movie: movie),
-                CastingCards()
+                CastingCards(movieId: movie.id)
               ]))
             ],
             physics: const BouncingScrollPhysics(

@@ -11,6 +11,7 @@ class MoviesProvider extends ChangeNotifier {
 
   List<Movie> nowPlayingMovies = [];
   List<Movie> popularMovies = [];
+  Map<int, List<Cast>> moviesCast = {};
   int _pageNumber = 0;
 
   MoviesProvider() {
@@ -35,10 +36,16 @@ class MoviesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<Cast>> getMovieCast(int movieId) async {
+    final castResponse =
+        CastResponse.fromJson(await _getJsonData('3/movie/$movieId/credits'));
+        moviesCast[movieId] = castResponse.cast;
+        return castResponse.cast;
+  }
+
   Future<String> _getJsonData(String endpoint, [int page = 1]) async {
     var url = Uri.https(_baseUrl, endpoint,
         {'api_key': _apiKey, 'language': _language, 'page': '$page'});
-    print("PÁGINA ===>" + page.toString());
 
     final response = await http.get(url);
     return response.body;
