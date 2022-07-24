@@ -27,28 +27,32 @@ class CastingCards extends StatelessWidget {
               ],
             ),
           );
+        } else {
+          final cast = snapshot.data!;
+          return Container(
+            width: double.infinity,
+            height: 180,
+            margin: const EdgeInsets.only(bottom: 30),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 10,
+              itemBuilder: (_, int index) {
+                return CastCard(cast[index]);
+              },
+            ),
+          );
         }
-        return Container(
-          width: double.infinity,
-          height: 180,
-          margin: const EdgeInsets.only(bottom: 30),
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 10,
-            itemBuilder: (_, int index) {
-              return const CastCard();
-            },
-          ),
-        );
       },
     );
   }
 }
 
 class CastCard extends StatelessWidget {
-  const CastCard({
-    Key? key,
-  }) : super(key: key);
+  final Cast actor;
+
+  const CastCard(
+    this.actor,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -59,16 +63,16 @@ class CastCard extends StatelessWidget {
       child: Column(children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: const FadeInImage(
-              placeholder: AssetImage('assets/no-image.jpg'),
-              image: NetworkImage('https://via.placeholder.com/150x300'),
+          child: FadeInImage(
+              placeholder: const AssetImage('assets/no-image.jpg'),
+              image: NetworkImage(actor.fullPosterPath),
               height: 140,
               width: 100,
               fit: BoxFit.cover),
         ),
         const SizedBox(height: 5),
-        const Text(
-          'actor.name sgvdvsss svdsd',
+        Text(
+          actor.name,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,

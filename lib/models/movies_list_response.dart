@@ -7,29 +7,31 @@ import 'dart:convert';
 import 'package:peliculas_curso/models/models.dart';
 
 class MoviesListResponse {
-    MoviesListResponse({
-        this.dates,
-        required this.page,
-        required this.results,
-        required this.totalPages,
-        required this.totalResults,
-    });
+  MoviesListResponse({
+    this.dates,
+    required this.page,
+    required this.results,
+    required this.totalPages,
+    required this.totalResults,
+  });
 
-    Dates? dates;
-    int page;
-    List<Movie> results;
-    int totalPages;
-    int totalResults;
+  Dates? dates;
+  int page;
+  List<Movie> results;
+  int totalPages;
+  int totalResults;
 
-    factory MoviesListResponse.fromJson(String str) => MoviesListResponse.fromMap(json.decode(str));
+  factory MoviesListResponse.fromJson(String str) =>
+      MoviesListResponse.fromMap(json.decode(str));
 
-    factory MoviesListResponse.fromMap(Map<String, dynamic> json) => MoviesListResponse(
+  factory MoviesListResponse.fromMap(Map<String, dynamic> json) =>
+      MoviesListResponse(
         dates: json["dates"] == null ? null : Dates.fromMap(json["dates"]),
         page: json["page"],
         results: List<Movie>.from(json["results"].map((x) => Movie.fromMap(x))),
         totalPages: json["total_pages"],
         totalResults: json["total_results"],
-    );
+      );
 }
 
 class Dates {

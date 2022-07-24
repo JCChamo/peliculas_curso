@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculas_curso/models/models.dart';
@@ -37,10 +35,11 @@ class MoviesProvider extends ChangeNotifier {
   }
 
   Future<List<Cast>> getMovieCast(int movieId) async {
-    final castResponse =
-        CastResponse.fromJson(await _getJsonData('3/movie/$movieId/credits'));
-        moviesCast[movieId] = castResponse.cast;
-        return castResponse.cast;
+    if (moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
+    final jsonData = await _getJsonData('3/movie/$movieId/credits');
+    final castResponse = CastResponse.fromJson(jsonData);
+    moviesCast[movieId] = castResponse.cast;
+    return castResponse.cast;
   }
 
   Future<String> _getJsonData(String endpoint, [int page = 1]) async {
