@@ -4,7 +4,7 @@ import 'package:peliculas_curso/models/models.dart';
 import 'package:peliculas_curso/theme/app_theme.dart';
 import 'package:peliculas_curso/widgets/widgets.dart';
 
-class DetailsScreen extends StatelessWidget {
+class FilmDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Movie movie = ModalRoute.of(context)?.settings.arguments as Movie;

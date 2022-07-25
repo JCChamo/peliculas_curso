@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas_curso/models/models.dart';
-import 'package:peliculas_curso/providers/movies_provider.dart';
+import 'package:peliculas_curso/providers/providers.dart';
 import 'package:provider/provider.dart';
 
 class CastingCards extends StatelessWidget {
@@ -63,12 +63,16 @@ class CastCard extends StatelessWidget {
       child: Column(children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: FadeInImage(
-              placeholder: const AssetImage('assets/no-image.jpg'),
-              image: NetworkImage(actor.fullPosterPath),
-              height: 140,
-              width: 100,
-              fit: BoxFit.cover),
+          child: GestureDetector(
+            onTap: () => Navigator.pushNamed(context, 'actor-details',
+                arguments: actor.id),
+            child: FadeInImage(
+                placeholder: const AssetImage('assets/no-image.jpg'),
+                image: NetworkImage(actor.fullPosterPath),
+                height: 140,
+                width: 100,
+                fit: BoxFit.cover),
+          ),
         ),
         const SizedBox(height: 5),
         Text(

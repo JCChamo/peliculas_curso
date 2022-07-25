@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas_curso/providers/movies_provider.dart';
+import 'package:peliculas_curso/providers/providers.dart';
 import 'package:peliculas_curso/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas_curso/providers/movies_provider.dart';
+import 'package:peliculas_curso/providers/providers.dart';
 import 'package:peliculas_curso/screens/screens.dart';
 import 'package:peliculas_curso/theme/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'home': (_) => const HomeScreen(),
-        'details': (_) => DetailsScreen(),
+        'film-details': (_) => FilmDetailsScreen(),
+        'actor-details': (_) => ActorDetailsScreen(),
       },
       theme: AppTheme.lightTheme,
     );
