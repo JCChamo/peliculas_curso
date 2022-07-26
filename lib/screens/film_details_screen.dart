@@ -37,6 +37,7 @@ class _CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SliverAppBar(
       backgroundColor: AppTheme.primaryColor,
       expandedHeight: 200,
@@ -48,7 +49,7 @@ class _CustomAppBar extends StatelessWidget {
         title: Container(
             width: double.infinity,
             color: Colors.black12,
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(size.height * 0.02),
             child: Text(movie.title, style: const TextStyle(fontSize: 16)),
             alignment: Alignment.bottomCenter),
         background: FadeInImage(
