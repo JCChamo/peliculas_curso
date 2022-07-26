@@ -10,7 +10,8 @@ class AppState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (_) => MoviesProvider(), lazy: false)
+      ChangeNotifierProvider(create: (_) => MoviesProvider(), lazy: false),
+      ChangeNotifierProvider(create: (_) => ActorProvider(), lazy: false)
     ], child: MyApp());
   }
 }
