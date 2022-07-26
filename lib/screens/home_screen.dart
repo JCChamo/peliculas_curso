@@ -9,6 +9,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final moviesProvider = Provider.of<MoviesProvider>(context);
+    final size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           title: const Text('Películas'),
@@ -19,6 +20,7 @@ class HomeScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(children: <Widget>[
             CardSwiper(movies: moviesProvider.nowPlayingMovies),
+            SizedBox(height: size.height * 0.04),
             MovieSlider(
                 popularMovies: moviesProvider.popularMovies,
                 onNextPage: moviesProvider.getPopularMovies)

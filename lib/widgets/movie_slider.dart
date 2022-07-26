@@ -37,7 +37,7 @@ class _MovieSliderState extends State<MovieSlider> {
     final size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
-      height: size.height * 0.3,
+      height: size.height * 0.5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,7 +45,7 @@ class _MovieSliderState extends State<MovieSlider> {
               padding: EdgeInsets.only(left: 20),
               child: Text('Populares',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-          SizedBox(height: size.height * 0.01),
+          SizedBox(height: size.height * 0.02),
           Expanded(
             child: ListView.builder(
                 controller: _scrollController,

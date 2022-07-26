@@ -44,11 +44,11 @@ class ActorDetailsScreen extends StatelessWidget {
                           textAlign: TextAlign.start,
                         ),
                         SizedBox(height: size.height * 0.03),
-                        Text(
+                        actor.biography! != "" ? Text(
                           actor.biography!,
                           textAlign: TextAlign.justify,
                           style: textTheme.subtitle1,
-                        ),
+                        ) : SizedBox(height: size.height * 0.18),
                         SizedBox(height: size.height * 0.03),
                       ],
                     ),

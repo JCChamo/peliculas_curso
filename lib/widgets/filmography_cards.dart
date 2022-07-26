@@ -32,7 +32,7 @@ class FilmographyCards extends StatelessWidget {
           final filmography = snapshot.data;
           return Container(
             width: double.infinity,
-            height: 180,
+            height: 200,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: filmography!.length,
