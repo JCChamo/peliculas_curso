@@ -52,7 +52,10 @@ class _MovieSliderState extends State<MovieSlider> {
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.popularMovies.length,
                 itemBuilder: (_, int index) => _MoviePoster(
-                    size: size, movie: widget.popularMovies[index])),
+                      size: size,
+                      movie: widget.popularMovies[index],
+                      heroId: '${widget.popularMovies[index].title}-$index',
+                    )),
           ),
         ],
       ),
@@ -62,33 +65,39 @@ class _MovieSliderState extends State<MovieSlider> {
 
 class _MoviePoster extends StatelessWidget {
   final Movie movie;
+  final String heroId;
 
   const _MoviePoster({
     Key? key,
     required this.size,
     required this.movie,
+    required this.heroId,
   }) : super(key: key);
 
   final Size size;
 
   @override
   Widget build(BuildContext context) {
+    movie.heroId = heroId;
     return Container(
       width: size.width * 0.3,
       height: size.height * 0.22,
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(children: [
         GestureDetector(
-          onTap: () => Navigator.pushNamed(context, 'film-details',
-              arguments: movie),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-                width: 130,
-                height: 180,
-                fit: BoxFit.cover,
-                placeholder: const AssetImage('assets/no-image.jpg'),
-                image: NetworkImage(movie.fullPosterPath)),
+          onTap: () =>
+              Navigator.pushNamed(context, 'film-details', arguments: movie),
+          child: Hero(
+            tag: movie.heroId!,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                  width: 130,
+                  height: 180,
+                  fit: BoxFit.cover,
+                  placeholder: const AssetImage('assets/no-image.jpg'),
+                  image: NetworkImage(movie.fullPosterPath)),
+            ),
           ),
         ),
         SizedBox(height: size.height * 0.005),

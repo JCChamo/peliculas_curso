@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculas_curso/helpers/debouncer.dart';
 import 'package:peliculas_curso/models/models.dart';
 
 class MoviesProvider extends ChangeNotifier {
@@ -11,6 +14,11 @@ class MoviesProvider extends ChangeNotifier {
   List<Movie> popularMovies = [];
   Map<int, List<Cast>> moviesCast = {};
   int _pageNumber = 0;
+
+  final StreamController<List<Movie>> _streamController =
+      StreamController.broadcast();
+  Stream<List<Movie>> get stream => _streamController.stream;
+  final debouncer = Debouncer(duration: const Duration(milliseconds: 500));
 
   MoviesProvider() {
     print('MoviesProvider inicializado');
@@ -29,7 +37,7 @@ class MoviesProvider extends ChangeNotifier {
   getPopularMovies() async {
     _pageNumber++;
     final moviesListResponse = MoviesListResponse.fromJson(
-        await _getJsonData('3/movie/popular', _pageNumber));
+        await _getJsonData('3/movie/popular', page: _pageNumber));
     popularMovies = [...popularMovies, ...moviesListResponse.results];
     notifyListeners();
   }
@@ -42,11 +50,37 @@ class MoviesProvider extends ChangeNotifier {
     return castResponse.cast as List<Cast>;
   }
 
-  Future<String> _getJsonData(String endpoint, [int page = 1]) async {
-    var url = Uri.https(_baseUrl, endpoint,
-        {'api_key': _apiKey, 'language': _language, 'page': '$page'});
+  Future<List<Movie>> getSearchMovies(String query) async {
+    final jsonData = await _getJsonData('3/search/movie', query: query);
+    final searchMovieResponse = SearchMoviesResponse.fromJson(jsonData);
+    return searchMovieResponse.results;
+  }
+
+  Future<String> _getJsonData(String endpoint,
+      {int page = 1, String query = ''}) async {
+    final url = Uri.https(_baseUrl, endpoint, {
+      'api_key': _apiKey,
+      'language': _language,
+      'page': '$page',
+      'query': query
+    });
 
     final response = await http.get(url);
     return response.body;
+  }
+
+  void getSuggestionsByQuery(String searchTerm) {
+    debouncer.value = '';
+    debouncer.onValue = (value) async {
+      // print('Tenemos valor a buscar: $value');
+      final results = await getSearchMovies(value);
+      _streamController.add(results);
+    };
+
+    final timer = Timer.periodic(const Duration(milliseconds: 300), (_) {
+      debouncer.value = searchTerm;
+    });
+    Future.delayed(const Duration(milliseconds: 300))
+        .then((value) => timer.cancel());
   }
 }
